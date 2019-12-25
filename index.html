@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/swiper.min.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Lesson26 Знакомство с PHP + формы</title>
+    <title>Lesson27 jQuery AJAX</title>
   </head>
   <body>
     <header class="header">
@@ -223,15 +223,15 @@
             трансляцию с одного из наших объектов! Оставьте заявку ниже чтобы
             получить ссылку на трансляцию.
           </p>
-          <!-- /.control__text -->
-          <form action="send.php" method="POST" class="form control__form">
+          <!-- /.control__text action="send.php"-->
+          <form method="POST" id="control-form" class="form control__form">
             <div class="control__input-name">
               <label for="user-name" class="label form__label control__label">Имя</label>
-              <input type="text" name="userName" class="input form__input control__input input--dark" id="user-name" placeholder="Как вас зовут:">
+              <input type="text" name="userName" class="input form__input control__input input--dark" id="control-user-name" placeholder="Как вас зовут:">
             </div>
             <div class="control__input-phone">
               <label for="user-phone" class="label form__label control__label">Телефон</label>
-              <input type="tel" name="userPhone" class="input form__input control__input input--dark" id="user-phone" placeholder="Ваш номер телефона:">
+              <input type="tel" name="userPhone" class="input form__input control__input input--dark" id="control-user-phone" placeholder="Ваш номер телефона:">
             </div>
 
             <button class="button control__button button--primary__little">Отправить</button>
@@ -478,14 +478,14 @@
       <div class="container">
         <div class="footer__wrap">
           <h3 class="footer__title">Остались вопросы?</h3>
-          <form action="send.php" method="POST" class="form footer__form">
+          <form method="POST" class="form footer__form">
             <div class="inrut-group footer__input-group">
               <label for="user-name" class="label form__label label--light">Имя</label>
-              <input type="text" name="userName" class="input form__input footer__input input--light" id="user-name" placeholder="Как вас зовут:">
+              <input type="text" name="userName" class="input form__input footer__input input--light" id="footer-user-name" placeholder="Как вас зовут:">
             </div>
             <inrut-group class="footer__input-group">
               <label for="user-phone" class="label form__label label--light">Телефон</label>
-              <input type="tel" name="userPhone" class="input form__input footer__input input--light" id="user-phone" placeholder="Ваш номер телефона:">
+              <input type="tel" name="userPhone" class="input form__input footer__input input--light" id="footer-user-phone" placeholder="Ваш номер телефона:">
             </inrut-group>
             <inrut-group class="footer__input-group footer__input-group--full-width">
               <label for="user-question" class="label form__label label--light">Вопрос</label>
@@ -552,14 +552,14 @@
       <div class="modal__dialog">
         <button class="modal__close"></button>
         <h3 class="modal__title">Оставьте заявку и наш менеджер свяжется с вами </h3>
-        <form action="send.php" method="POST" class="form modal__form">
+        <form method="POST" class="form modal__form">
           <div class="input-group modal__input-group">
             <label for="user-name" class="label form__label label--light">Имя</label>
-            <input type="text" name="userName" class="input form__input modal__input input--light" id="user-name" placeholder="Как вас зовут:">
+            <input type="text" name="userName" class="input form__input modal__input input--light" id="modal-user-name" placeholder="Как вас зовут:">
           </div>
           <div class="input-group modal__input-group">
             <label for="user-phone" class="label form__label label--light">Телефон</label>
-            <input type="tel" name="userPhone" class="input form__input modal__input input--light" id="user-phone" placeholder="Ваш номер телефона:">
+            <input type="tel" name="userPhone" class="input form__input modal__input input--light" id="modal-user-phone" placeholder="Ваш номер телефона:">
           </div>
           <div class="input-group modal__input-group">
             <label for="user-email" class="label form__label label--light">Email</label>
@@ -576,6 +576,10 @@
       </div>
       <!-- /.modal__dialog -->
     </div>
+    <!-- /.modal -->
+    <!-- <div class="modal-only">
+      Всплывающие окно
+    </div> -->
     <!-- /.modal -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="js/swiper.min.js"></script>

@@ -9,6 +9,7 @@ $(document).ready(function() {
     modal.toggleClass('modal--visible')
   });
 
+
   // слайдер в секции Завершенные проекты
   var mySwiper = new Swiper ('.swiper-container', {
     loop: true,
@@ -68,7 +69,23 @@ $(document).ready(function() {
           required: "Обязательно укажите email",
           email: "Введите в формате name@domain.com"
         }
-      }
+      },
+      // Событие отлавливающее форму
+      submitHandler: function(form) {
+      $.ajax({
+        type: "POST",
+        url: "send.php",
+        data: $(this).serialize(),
+        success: function(response) {
+          //alert('Форма отправлена, мы свяжимся с вами через 10 минут');
+          $(form)[0].reset();
+          modal.removeClass('modal--visible');
+        },
+        error: function (response) {
+          console.error("Ошибка: " + response);
+        }
+      });
+    }
   });
 
   $('.footer__form').validate({
@@ -108,7 +125,22 @@ $(document).ready(function() {
           minlength: "Что вы хотите узнать",
           maxlength: "Вопрос не должен привышеть 40 символов"
         }
-      }
+      },
+      // Событие отлавливающее форму
+      submitHandler: function(form) {
+      $.ajax({
+        type: "POST",
+        url: "send.php",
+        data: $(this).serialize(),
+        success: function(response) {
+          //alert('Форма отправлена, мы свяжимся с вами через 10 минут');
+          $(form)[0].reset();
+        },
+        error: function (response) {
+          console.error("Ошибка: " + response);
+        }
+      });
+    }
   });
 
   $('.control__form').validate({
@@ -137,8 +169,23 @@ $(document).ready(function() {
           required: "Телефон обязателен",
           minlength: "Слишком короткий номор",
           maxlength: "Номер не должен быть больше 11 символов"
+        }
+      },
+      // Событие отлавливающее форму
+      submitHandler: function(form) {
+      $.ajax({
+        type: "POST",
+        url: "send.php",
+        data: $(this).serialize(),
+        success: function(response) {
+          // alert('.modal-only');
+          $(form)[0].reset();
         },
-      }
+        error: function (response) {
+          console.error("Ошибка: " + response);
+        }
+      });
+    }
   });
 
   // маска для телефона
