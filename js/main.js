@@ -8,8 +8,17 @@ $(document).ready(function() {
   closeBtn.on('click', function(){
     modal.toggleClass('modal--visible')
   });
-
-
+// Модальное окно с благодарностью
+  var modalA = $('.modal-answer'),
+      modalABtn = $('[data-toggle=modal-answer]'),
+      closeABtn = $('.modal-answer__close');
+  modalABtn.on('click', function(){
+    modalA.toggleClass('modal-answer--visible')
+  });
+  closeABtn.on('click', function(){
+    modalA.toggleClass('modal-answer--visible')
+  });
+  
   // слайдер в секции Завершенные проекты
   var mySwiper = new Swiper ('.swiper-container', {
     loop: true,
@@ -33,160 +42,66 @@ $(document).ready(function() {
 
   new WOW().init();
 
-  //Валидация формы
-  $('.modal__form').validate({
-    errorClass: "invalid",
-    rules: {
-      // строчное правило
-      userName: {
-        required: true,
-        minlength: 2,
-        maxlength: 15
-      },
-      userPhone: {
-        required: true,
-        minlength: 17,
-        maxlength: 18
-      },
-      // правило-объект (блок)
-      userEmail: {
-        required: true,
-        email: true
-      }
-    }, // сообщения
-      messages: {
-        userName: { 
-          required: "Имя обязательно",
-          minlength: "Слишком короткое имя",
-          maxlength: "Имя не должно превышать 15 символов"
+  // валидация форм
+  function validateForm(form){
+    $(form).validate({
+      errorClass: "invalid",
+      errorElement: "div",
+      rules: {
+        // simple rule, converted to {required:true}
+        userName: {
+          required: true,
+          minlength: 2,
+          maxlength: 15
         },
-        userPhone: { 
-          required: "Телефон обязателен",
-          minlength: "Слишком короткий номор",
-          maxlength: "Номер не должен быть больше 11 символов"
+        userPhone: {
+          required: true,
+          minlength: 17
         },
+        userQuestion: "required",
+        // compound rule
         userEmail: {
-          required: "Обязательно укажите email",
-          email: "Введите в формате name@domain.com"
+          required: true,
+          email: true
         }
       },
-      // Событие отлавливающее форму
-      submitHandler: function(form) {
-      $.ajax({
-        type: "POST",
-        url: "send.php",
-        data: $(this).serialize(),
-        success: function(response) {
-          //alert('Форма отправлена, мы свяжимся с вами через 10 минут');
-          $(form)[0].reset();
-          modal.removeClass('modal--visible');
+      messages: {
+        userName: {
+          required: "Заполните поле",
+          minlength: "Слишком короткое имя",
+          maxlength: "Имя не должно превышать 15 символов"
         },
-        error: function (response) {
-          console.error("Ошибка: " + response);
+        userPhone: {
+          required: "Заполните поле",
+          minlength: "Некорректно введен номер"
+        },
+        userQuestion: "Заполните поле",
+        userEmail: {
+          required: "Заполните поле",
+          email: "Введите Ваш email в формате name@domain.com"
         }
-      });
-    }
-  });
-
-  $('.footer__form').validate({
-    errorClass: "invalid",
-    rules: {
-      // строчное правило
-      userName: {
-        required: true,
-        minlength: 2,
-        maxlength: 15
       },
-      userPhone: {
-        required: true,
-        minlength: 17,
-        maxlength: 18
-      },
-      // правило-объект (блок)
-      userQuestion: {
-        required: true,
-        minlength: 2,
-        maxlength: 40
+      submitHandler: function (form) {
+        $.ajax({
+          type: "POST",
+          url: "send.php",
+          data: $(form).serialize(),
+          success: function(){
+           $(form)[0].reset();
+           //$(form).html('<p class="modal-answer__text">Спасибо! Заявка успешно отправлена. Наш менеджер перезвонит Вам в течение 15 минут.</p>');
+           modalA.toggleClass('modal-answer--visible');
+          },
+          error: function(jqXHR, textStatus) {
+            console.error(jqXHR + " " + textStatus);
+          }
+        });
       }
-    }, // сообщения
-      messages: {
-        userName: { 
-          required: "Имя обязательно",
-          minlength: "Слишком короткое имя",
-          maxlength: "Имя не должно превышать 15 символов"
-        },
-        userPhone: { 
-          required: "Телефон обязателен",
-          minlength: "Слишком короткий номор",
-          maxlength: "Номер не должен быть больше 11 символов"
-        },
-        userQuestion: {
-          required: "Укажите свой вопрос",
-          minlength: "Что вы хотите узнать",
-          maxlength: "Вопрос не должен привышеть 40 символов"
-        }
-      },
-      // Событие отлавливающее форму
-      submitHandler: function(form) {
-      $.ajax({
-        type: "POST",
-        url: "send.php",
-        data: $(this).serialize(),
-        success: function(response) {
-          //alert('Форма отправлена, мы свяжимся с вами через 10 минут');
-          $(form)[0].reset();
-        },
-        error: function (response) {
-          console.error("Ошибка: " + response);
-        }
-      });
-    }
-  });
+    });
+  }
+  validateForm('.modal__form');
+  validateForm('.control__form');
+  validateForm('.footer__form');
 
-  $('.control__form').validate({
-    errorClass: "invalid",
-    rules: {
-      // строчное правило
-      userName: {
-        required: true,
-        minlength: 2,
-        maxlength: 15
-      },
-      userPhone: {
-        required: true,
-        minlength: 17,
-        maxlength: 18
-      },
-      // правило-объект (блок)
-    }, // сообщения
-      messages: {
-        userName: { 
-          required: "Имя обязательно",
-          minlength: "Слишком короткое имя",
-          maxlength: "Имя не должно превышать 15 символов"
-        },
-        userPhone: { 
-          required: "Телефон обязателен",
-          minlength: "Слишком короткий номор",
-          maxlength: "Номер не должен быть больше 11 символов"
-        }
-      },
-      // Событие отлавливающее форму
-      submitHandler: function(form) {
-      $.ajax({
-        type: "POST",
-        url: "send.php",
-        data: $(this).serialize(),
-        success: function(response) {
-          // alert('.modal-only');
-          $(form)[0].reset();
-        },
-        error: function (response) {
-          console.error("Ошибка: " + response);
-        }
-      });
-    }
-  });
 
   // маска для телефона
 
